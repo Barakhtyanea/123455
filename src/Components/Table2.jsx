@@ -19,10 +19,10 @@ import Tooltip from '@material-ui/core/Tooltip';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import DeleteIcon from '@material-ui/icons/Delete';
-import FilterListIcon from '@material-ui/icons/FilterList';
-import * as _ from 'lodash';
-import { removeElement, removeElements } from '../Store/actions/Actions';
+import AddIcon from '@material-ui/icons/Add';
 import { connect } from 'react-redux';
+import EditButton from "./EditButton";
+import {addNewElement, editElement, removeElement, removeElements} from '../Store/actions/Actions';
 
 
 function descendingComparator(a, b, orderBy) {
@@ -143,7 +143,6 @@ const useToolbarStyles = makeStyles((theme) => ({
 }));
 
 
-
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
@@ -168,7 +167,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-let EnhancedTable = ({data, handleClickDeleteSelected})=> {
+let EnhancedTable = ({ data, handleClickDeleteSelected, handleClickAddNewElement, handleClickEditElement }) => {
   const classes = useStyles();
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('name');
@@ -177,8 +176,8 @@ let EnhancedTable = ({data, handleClickDeleteSelected})=> {
   const [dense, setDense] = useState(false);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
-  const rows = data ? data : [];
-  
+  const rows = data || [];
+
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
@@ -253,17 +252,21 @@ let EnhancedTable = ({data, handleClickDeleteSelected})=> {
         )}
 
         {numSelected > 0 ? (
-          <Tooltip title="Delete">
-            <IconButton aria-label="delete" onClick= {props.deleteSelected}>
-              <DeleteIcon />
-            </IconButton>
-          </Tooltip>
+          <div>
+            <Tooltip title="Delete">
+              <IconButton aria-label="delete" onClick={props.deleteSelected}>
+                <DeleteIcon />
+              </IconButton>
+            </Tooltip>
+          </div>
         ) : (
-          <Tooltip title="Filter list">
-            <IconButton aria-label="filter list">
-              <FilterListIcon />
-            </IconButton>
-          </Tooltip>
+          <div>
+            <Tooltip title="Add">
+              <IconButton aria-label="Add" onClick={props.newElement}>
+                <AddIcon />
+              </IconButton>
+            </Tooltip>
+          </div>
         )}
       </Toolbar>
     );
@@ -277,7 +280,7 @@ let EnhancedTable = ({data, handleClickDeleteSelected})=> {
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
-        <EnhancedTableToolbar numSelected={selected.length} deleteSelected={()=> handleClickDeleteSelected(selected)} />
+        <EnhancedTableToolbar numSelected={selected.length} deleteSelected={() => handleClickDeleteSelected(selected)} newElement={() => handleClickAddNewElement()} />
         <TableContainer>
           <Table
             className={classes.table}
@@ -299,22 +302,17 @@ let EnhancedTable = ({data, handleClickDeleteSelected})=> {
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, index) => {
                   const isItemSelected = isSelected(row.key);
                   const labelId = `enhanced-table-checkbox-${index}`;
-                  console.log('Selected', selected);
-                  
 
 
                   return (
-                    <TableRow
-                      hover
-                      onClick={(event) => handleClick(event, row.key)}
-                      role="checkbox"
-                      aria-checked={isItemSelected}
-                      tabIndex={-1}
-                      key={row.key}
-                      selected={isItemSelected}
-                    >
+                    <TableRow key={row.key}>
                       <TableCell padding="checkbox">
                         <Checkbox
+                          onClick={(event) => handleClick(event, row.key)}
+                          role="checkbox"
+                          aria-checked={isItemSelected}
+                          tabIndex={-1}
+                          selected={isItemSelected}
                           checked={isItemSelected}
                           inputProps={{ 'aria-labelledby': labelId }}
                         />
@@ -323,6 +321,7 @@ let EnhancedTable = ({data, handleClickDeleteSelected})=> {
                       <TableCell align="right">{row.birth_year}</TableCell>
                       <TableCell align="right">{row.eye_color}</TableCell>
                       <TableCell align="right">{row.hair_color}</TableCell>
+                      <TableCell align="right"><EditButton data={row} changeElement={() => handleClickEditElement()} /></TableCell>
                     </TableRow>
                   );
                 })}
@@ -350,23 +349,22 @@ let EnhancedTable = ({data, handleClickDeleteSelected})=> {
       />
     </div>
   );
-}
+};
 
-const mapStateToProps = (state)=> ({
-  data: state.data
-})
+const mapStateToProps = (state) => ({
+  data: state.data,
+});
 
-const mapDispatchToProps = dispatch=> {
-  return {
-    handleClickDeleteSelected: (keys)=> { 
-      console.log('Button pressed', keys)
-      dispatch(removeElements(keys))
-    }
-  }
-}
+const mapDispatchToProps = (dispatch) => ({
+  handleClickDeleteSelected: (keys) => {
+    dispatch(removeElements(keys));
+  },
+  handleClickAddNewElement: () => {
+    dispatch(addNewElement());
+  },
+  handleClickEditElement: (object) => {
+    dispatch(editElement(object));
+  },
+});
 
-export default EnhancedTable = connect(mapStateToProps, mapDispatchToProps)(EnhancedTable)
-
-
-
-
+export default EnhancedTable = connect(mapStateToProps, mapDispatchToProps)(EnhancedTable);

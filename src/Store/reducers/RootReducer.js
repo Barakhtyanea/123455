@@ -1,16 +1,31 @@
 import { v4 as uuidv4 } from 'uuid';
-import {FETCH_REQUEST, FETCH_FAILURE, FETCH_SUCCESS, REMOVE_ELEMENTS} from '../actions/ActionTypes';
+import * as _ from 'lodash';
+import {
+  FETCH_REQUEST, FETCH_FAILURE, FETCH_SUCCESS, REMOVE_ELEMENTS, EDIT_ELEMENT, ADD_NEW_ELEMENT,
+} from '../actions/ActionTypes';
 
 
 export default function rootReducer(state, action) {
   switch (action.type) {
     case REMOVE_ELEMENTS:
-      const newData = _.filter(state.data, (value) => {
-        return (action.keysToDelete.indexOf(value.key) == -1)
-      })
+      const newData = _.filter(state.data, (value) => (action.keysToDelete.indexOf(value.key) === -1));
       return {
         ...state,
         data: newData,
+      };
+
+    case EDIT_ELEMENT:
+      console.log(action.changedObject);
+      return state;
+
+    case ADD_NEW_ELEMENT:
+      const newArray = [{
+        name: '', birth_year: '', eye_color: '', hair_color: '',
+      }];
+      const actualArray = newArray.concat(state.data);
+      return {
+        ...state,
+        data: actualArray.map((value) => ({ ...value, key: uuidv4() })),
       };
 
     case FETCH_REQUEST:

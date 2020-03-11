@@ -4,7 +4,7 @@ import { Route } from 'react-router-dom';
 import {
   fetchPeople, fetchFailure, fetchRequest, fetchSuccess, removeElements,
 } from '../Store/actions/Actions';
-import EnhancedTable from '../Components/Table2';
+import EnhancedTable from '../Components/PeopleTable';
 
 class People extends Component {
   componentDidMount() {

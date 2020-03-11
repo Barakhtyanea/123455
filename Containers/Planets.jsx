@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
-import MaterialTableDemo from '../Components/Table';
+import EnhancedPlanetTable from '../Components/PlanetTable';
 import {
   fetchFailure, fetchPlanets, fetchRequest, fetchSuccess,
 } from '../Store/actions/Actions';
@@ -12,10 +12,9 @@ class Planets extends Component {
   }
 
   render() {
-    const { data } = this.props;
     return (
       <Route path="/planets">
-        <MaterialTableDemo data={data} />
+        <EnhancedPlanetTable {...this.props} />
       </Route>
     );
   }

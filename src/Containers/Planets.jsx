@@ -1,31 +1,38 @@
 import React, { Component } from 'react';
-import { Route } from 'react-router-dom';
+import { Route, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import MaterialTableDemo from '../Components/Table';
+
+
+import EnhancedPlanetTable from '../Components/PlanetTable';
 import {
   fetchFailure, fetchPlanets, fetchRequest, fetchSuccess,
-} from '../Store/actions/Actions';
+} from '../Store/actions/RootActions';
+
+const planetLabels = {
+  labelName: 'Name',
+  labelElementTwo: 'Climate',
+  labelElementThree: 'Terrain',
+  labelElementFour: 'Population',
+};
 
 class Planets extends Component {
+
   componentDidMount() {
     this.props.fetchPlanets();
   }
 
   render() {
-    const { data } = this.props;
     return (
-      <Route path="/planets">
-        <MaterialTableDemo data={data} />
-      </Route>
+      <EnhancedPlanetTable {...this.props} labels={planetLabels} />
     );
   }
 }
 
-const mapStateToProps = (state) => {
-  return ({
-    data: state.data,
-  });
-};
+
+
+const mapStateToProps = (state) => ({
+  data: state.data,
+});
 
 const mapDispatchToProps = (dispatch) => ({
   fetchRequest: () => dispatch(fetchRequest()),
@@ -35,7 +42,7 @@ const mapDispatchToProps = (dispatch) => ({
 }
 );
 
-export default connect(
+export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps,
-)(Planets);
+)(Planets));

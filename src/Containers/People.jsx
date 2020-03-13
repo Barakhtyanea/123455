@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Route } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import {
   fetchPeople, fetchFailure, fetchRequest, fetchSuccess, removeElements,
-} from '../Store/actions/Actions';
-import EnhancedTable from '../Components/Table2';
+} from '../Store/actions/RootActions';
+import EnhancedTable from '../Components/PeopleTable';
+
 
 class People extends Component {
   componentDidMount() {
@@ -14,9 +15,7 @@ class People extends Component {
 
   render() {
     return (
-      <Route path="/people">
-        <EnhancedTable {...this.props} />
-      </Route>
+      <EnhancedTable {...this.props} />
     );
   }
 }
@@ -34,7 +33,7 @@ const mapDispatchToProps = (dispatch) => ({
 }
 );
 
-export default connect(
+export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps,
-)(People);
+)(People));

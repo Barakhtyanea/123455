@@ -4,8 +4,15 @@ import { withRouter } from 'react-router-dom';
 import {
   fetchPeople, fetchFailure, fetchRequest, fetchSuccess, removeElements,
 } from '../Store/actions/RootActions';
-import EnhancedTable from '../Components/PeopleTable';
+import Table from '../Components/Table';
 
+
+const peopleLabels = {
+  labelName: 'Name',
+  labelElementTwo: 'Birth year',
+  labelElementThree: 'Eye color',
+  labelElementFour: 'Hair color',
+};
 
 class People extends Component {
   componentDidMount() {
@@ -15,7 +22,7 @@ class People extends Component {
 
   render() {
     return (
-      <EnhancedTable {...this.props} />
+      <Table {...this.props} labels={peopleLabels} />
     );
   }
 }
@@ -29,7 +36,6 @@ const mapDispatchToProps = (dispatch) => ({
   fetchSuccess: () => dispatch(fetchSuccess()),
   fetchFailure: () => dispatch(fetchFailure()),
   fetchPeople: () => dispatch(fetchPeople()),
-  removeElements: () => dispatch(removeElements()),
 }
 );
 

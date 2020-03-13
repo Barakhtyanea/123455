@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
-import { Route, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 
-import EnhancedPlanetTable from '../Components/PlanetTable';
+import Table from '../Components/Table';
 import {
   fetchFailure, fetchPlanets, fetchRequest, fetchSuccess,
 } from '../Store/actions/RootActions';
+
 
 const planetLabels = {
   labelName: 'Name',
@@ -23,7 +24,7 @@ class Planets extends Component {
 
   render() {
     return (
-      <EnhancedPlanetTable {...this.props} labels={planetLabels} />
+      <Table {...this.props} labels={planetLabels} />
     );
   }
 }

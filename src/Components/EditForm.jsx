@@ -24,30 +24,34 @@ const useButtonStyles = makeStyles((theme) => ({
     },
   },
 }));
-const EditForm = ({ changeElement, changedObject, data, theadLabels }) => {
+
+const EditForm = ({
+  changeElement, changedObject, data, theadLabels, theadValues,
+}) => {
   const classes = useButtonStyles();
+
   const [open, setOpen] = React.useState(false);
 
   const handleToggle = () => {
     setOpen(!open);
   };
 
-  const [nameValue, setNameValue] = useState(data.name);
-  const [climateValue, setClimateValue] = useState(data.climate || data.birth_year);
-  const [terrainValue, setTerrainValue] = useState(data.terrain || data.eye_color);
-  const [populationValue, setPopulationValue] = useState(data.population || data.hair_color);
+  const [firstValue, setFirstValue] = useState(data[theadValues.valueOne]);
+  const [secondValue, setSecondValue] = useState(data[theadValues.valueTwo]);
+  const [thirdValue, setThirdValue] = useState(data[theadValues.valueThree]);
+  const [fourthValue, setFourthValue] = useState(data[theadValues.valueFour]);
 
-  const handleChangeName = (event) => {
-    setNameValue(event.target.value);
+  const handleChangeFirst = (event) => {
+    setFirstValue(event.target.value);
   };
-  const handleChangeClimate = (event) => {
-    setClimateValue(event.target.value);
+  const handleChangeSecond = (event) => {
+    setSecondValue(event.target.value);
   };
-  const handleChangeTerrain = (event) => {
-    setTerrainValue(event.target.value);
+  const handleChangeThird = (event) => {
+    setThirdValue(event.target.value);
   };
-  const handleChangePopulation = (event) => {
-    setPopulationValue(event.target.value);
+  const handleChangeFourth = (event) => {
+    setFourthValue(event.target.value);
   };
 
   const handleCancelClose = () => {
@@ -57,10 +61,10 @@ const EditForm = ({ changeElement, changedObject, data, theadLabels }) => {
   const handleClose = () => {
     ``;
     setOpen(false);
-    data.name = nameValue;
-    data.climate = climateValue;
-    data.terrain = terrainValue;
-    data.population = populationValue;
+    data[theadValues.valueOne] = firstValue;
+    data[theadValues.valueTwo] = secondValue;
+    data[theadValues.valueThree] = thirdValue;
+    data[theadValues.valueFour] = fourthValue;
     changeElement(data);
   };
 
@@ -75,10 +79,10 @@ const EditForm = ({ changeElement, changedObject, data, theadLabels }) => {
         <div>
           <form className={classes.root} noValidate autoComplete="off">
             <div>
-              <TextField value={nameValue} label={theadLabels.labelName} variant="filled" onChange={handleChangeName} />
-              <TextField value={climateValue} label={theadLabels.labelElementTwo} variant="filled" onChange={handleChangeClimate} />
-              <TextField value={terrainValue} label={theadLabels.labelElementThree} variant="filled" onChange={handleChangeTerrain} />
-              <TextField value={populationValue} label={theadLabels.labelElementFour} variant="filled" onChange={handleChangePopulation} />
+              <TextField value={firstValue} label={theadLabels.labelName} variant="filled" onChange={handleChangeFirst} />
+              <TextField value={secondValue} label={theadLabels.labelElementTwo} variant="filled" onChange={handleChangeSecond} />
+              <TextField value={thirdValue} label={theadLabels.labelElementThree} variant="filled" onChange={handleChangeThird} />
+              <TextField value={fourthValue} label={theadLabels.labelElementFour} variant="filled" onChange={handleChangeFourth} />
             </div>
           </form>
           <Tooltip title="Edit">

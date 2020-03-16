@@ -6,10 +6,10 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import ButtonAppBar from './Containers/Header';
 import SimpleFooter from './Containers/Footer';
 import store from './Store/store';
-import People from './Containers/People';
-import Planets from './Containers/Planets';
 import Home from './Containers/Home';
 import theme from './Theme/muiTheme';
+import People from './Containers/People';
+import Planets from './Containers/Planets';
 
 const App = ({ store }) => (
 

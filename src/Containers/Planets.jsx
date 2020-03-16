@@ -2,34 +2,39 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-
 import Table from '../Components/Table';
 import {
   fetchFailure, fetchPlanets, fetchRequest, fetchSuccess,
 } from '../Store/actions/RootActions';
 
 
-const planetLabels = {
+const label = {
   labelName: 'Name',
   labelElementTwo: 'Climate',
   labelElementThree: 'Terrain',
   labelElementFour: 'Population',
 };
 
+const value = {
+  valueOne: 'name',
+  valueTwo: 'climate',
+  valueThree: 'terrain',
+  valueFour: 'population',
+};
+
 class Planets extends Component {
 
   componentDidMount() {
     this.props.fetchPlanets();
+    console.log();
   }
 
   render() {
     return (
-      <Table {...this.props} labels={planetLabels} />
+      <Table {...this.props} labels={label} values={value} />
     );
   }
 }
-
-
 
 const mapStateToProps = (state) => ({
   data: state.data,

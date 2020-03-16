@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  AppBar, Toolbar, Typography, Container,
+  AppBar, Typography,
 } from '@material-ui/core';
 
 export default function Footer() {

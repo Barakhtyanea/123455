@@ -16,6 +16,10 @@ export const editElement = (editedObject) => ({
 
 export const addNewElement = () => ({
   type: ADD_NEW_ELEMENT,
+  firstValue: '1',
+  secondValue: '2',
+  thirdValue: '3',
+  fourthValue: '4',
 });
 
 export const fetchRequest = () => ({
@@ -34,6 +38,7 @@ export const fetchFailure = (error) => ({
 });
 
 const PeopleUrl = new URL('/https://swapi.co/api/people', 'https://cors-anywhere.herokuapp.com');
+
 const PlanetUrl = new URL('/https://swapi.co/api/planets', 'https://cors-anywhere.herokuapp.com');
 
 export const fetchPeople = () => (dispatch) => {

@@ -23,9 +23,10 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import theme from '../Theme/muiTheme';
+
 import EditForm from './EditForm';
 import { addNewElement, editElement, removeElements } from '../Store/actions/RootActions';
-import theme from '../Theme/muiTheme';
 
 
 function descendingComparator(a, b, orderBy) {
@@ -55,7 +56,6 @@ function stableSort(array, comparator) {
 }
 
 function EnhancedTableHead(props) {
-
   const {
     classes, onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort, theadLabels,
   } = props;
@@ -172,8 +172,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-let EnhancedPlanetTable = ({
-  data, handleClickDeleteSelected, handleClickAddNewElement, handleClickEditElement, labels,
+let swapiTable = ({
+  data, handleClickDeleteSelected, handleClickAddNewElement, handleClickEditElement, labels, values,
 }) => {
   const classes = useStyles();
   const [order, setOrder] = useState('asc');
@@ -302,7 +302,11 @@ let EnhancedPlanetTable = ({
   return (
     <div>
       <Paper className={classes.paper}>
-        <EnhancedTableToolbar numSelected={selected.length} deleteSelected={() => handleClickDeleteSelected(selected)} newElement={() => handleClickAddNewElement()} />
+        <EnhancedTableToolbar
+          numSelected={selected.length}
+          deleteSelected={() => { handleClickDeleteSelected(selected); setSelected([]); }}
+          newElement={() => handleClickAddNewElement()}
+        />
         <TableContainer>
           <Table
             aria-labelledby="tableTitle"
@@ -338,12 +342,12 @@ let EnhancedPlanetTable = ({
                           inputProps={{ 'aria-labelledby': labelId }}
                         />
                       </TableCell>
-                      <TableCell align="right">{row.name}</TableCell>
-                      <TableCell align="right">{row.climate || row.birth_year}</TableCell>
-                      <TableCell align="right">{row.terrain || row.eye_color}</TableCell>
-                      <TableCell align="right">{row.population || row.hair_color}</TableCell>
+                      <TableCell align="right">{row[values.valueOne]}</TableCell>
+                      <TableCell align="right">{row[values.valueTwo]}</TableCell>
+                      <TableCell align="right">{row[values.valueThree]}</TableCell>
+                      <TableCell align="right">{row[values.valueFour]}</TableCell>
                       <TableCell align="right">
-                        <EditForm data={row} theadLabels={labels} changeElement={(changedObject) => handleClickEditElement(changedObject)} />
+                        <EditForm theadValues={values} data={row} theadLabels={labels} changeElement={(changedObject) => handleClickEditElement(changedObject)} />
                       </TableCell>
                     </TableRow>
                   );
@@ -390,4 +394,4 @@ const mapDispatchToProps = (dispatch) => ({
   },
 });
 
-export default EnhancedPlanetTable = withRouter(connect(mapStateToProps, mapDispatchToProps)(EnhancedPlanetTable));
+export default swapiTable = withRouter(connect(mapStateToProps, mapDispatchToProps)(swapiTable));

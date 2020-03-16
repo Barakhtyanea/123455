@@ -23,13 +23,17 @@ export default function rootReducer(state, action) {
       };
 
     case ADD_NEW_ELEMENT:
-      const newArray = [{
-        name: '', birth_year: '', eye_color: '', hair_color: '', climate: '', terrain: '', population: '',
-      }];
-      const actualArray = newArray.concat(state.data);
+      const actualArray = [{
+        firstValue: action.firstValue,
+        secondValue: action.secondValue,
+        thirdValue: action.thirdValue,
+        fourthValue: action.fourthValue,
+        key: uuidv4(),
+      }].concat(state.data);
+      console.log('ACTUAL', actualArray);
       return {
         ...state,
-        data: actualArray.map((value) => ({ ...value, key: uuidv4() })),
+        data: actualArray
       };
 
     case FETCH_REQUEST:

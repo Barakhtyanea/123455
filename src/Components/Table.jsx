@@ -23,6 +23,8 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
+import CreateIcon from '@material-ui/icons/Create';
 import theme from '../Theme/muiTheme';
 
 import EditForm from './EditForm';
@@ -250,6 +252,21 @@ let swapiTable = ({
     track: {},
   })(Switch);
 
+  const newObject = {};
+
+  newObject[values.valueOne] = '123';
+  newObject[values.valueTwo] = '';
+  newObject[values.valueThree] = '';
+  newObject[values.valueFour] = '';
+  newObject.key = uuidv4();
+  // labels.labelName;
+  // labels.labelElementTwo;
+  // labels.labelElementThree;
+  // labels.labelElementFour;
+
+  console.log('NEW OBJECT', newObject);
+  console.log('ROWS', rows);
+
   const EnhancedTableToolbar = (props) => {
     const classes = useToolbarStyles();
     const { numSelected } = props;
@@ -276,7 +293,7 @@ let swapiTable = ({
         {numSelected > 0 ? (
           <div>
             <Tooltip title="Delete">
-              <IconButton aria-label="delete" onClick={props.deleteSelected}>
+              <IconButton aria-label="Delete" onClick={props.deleteSelected}>
                 <DeleteIcon />
               </IconButton>
             </Tooltip>
@@ -303,9 +320,11 @@ let swapiTable = ({
     <div>
       <Paper className={classes.paper}>
         <EnhancedTableToolbar
+          theadLabels={labels}
           numSelected={selected.length}
           deleteSelected={() => { handleClickDeleteSelected(selected); setSelected([]); }}
-          newElement={() => handleClickAddNewElement()}
+          newElement={() => { handleClickAddNewElement(newObject); handleClickEditElement(newObject); }}
+          theadValues={values}
         />
         <TableContainer>
           <Table
@@ -347,7 +366,12 @@ let swapiTable = ({
                       <TableCell align="right">{row[values.valueThree]}</TableCell>
                       <TableCell align="right">{row[values.valueFour]}</TableCell>
                       <TableCell align="right">
-                        <EditForm theadValues={values} data={row} theadLabels={labels} changeElement={(changedObject) => handleClickEditElement(changedObject)} />
+                        <EditForm
+                          theadValues={values}
+                          data={row}
+                          theadLabels={labels}
+                          changeElement={(changedObject) => handleClickEditElement(changedObject)}
+                        />
                       </TableCell>
                     </TableRow>
                   );
@@ -386,8 +410,8 @@ const mapDispatchToProps = (dispatch) => ({
   handleClickDeleteSelected: (keys) => {
     dispatch(removeElements(keys));
   },
-  handleClickAddNewElement: () => {
-    dispatch(addNewElement());
+  handleClickAddNewElement: (newAddedObject) => {
+    dispatch(addNewElement(newAddedObject));
   },
   handleClickEditElement: (changedObject) => {
     dispatch(editElement(changedObject));

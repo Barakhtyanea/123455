@@ -14,12 +14,14 @@ export const editElement = (editedObject) => ({
   changedObject: editedObject,
 });
 
-export const addNewElement = () => ({
+export const addNewElement = (newAddedObject) => ({
   type: ADD_NEW_ELEMENT,
-  firstValue: '1',
-  secondValue: '2',
-  thirdValue: '3',
-  fourthValue: '4',
+  addedObject: newAddedObject,
+});
+
+export const editNewElement = (editedNewObject) => ({
+  type: EDIT_NEW_ELEMENT,
+  changedNewObject: editedNewObject,
 });
 
 export const fetchRequest = () => ({

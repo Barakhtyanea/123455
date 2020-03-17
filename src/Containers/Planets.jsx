@@ -26,7 +26,6 @@ class Planets extends Component {
 
   componentDidMount() {
     this.props.fetchPlanets();
-    console.log();
   }
 
   render() {

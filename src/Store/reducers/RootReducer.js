@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import * as _ from 'lodash';
 import {
-  FETCH_REQUEST, FETCH_FAILURE, FETCH_SUCCESS, REMOVE_ELEMENTS, EDIT_ELEMENT, ADD_NEW_ELEMENT,
+  FETCH_REQUEST, FETCH_FAILURE, FETCH_SUCCESS, REMOVE_ELEMENTS, EDIT_ELEMENT, ADD_NEW_ELEMENT, EDIT_NEW_ELEMENT,
 } from '../../Constants/ActionTypes';
 
 
@@ -22,18 +22,18 @@ export default function rootReducer(state, action) {
         data: newEditData,
       };
 
+      // case EDIT_NEW_ELEMENT:
+      //   const
+      //   return {
+      //     ...state,
+      //     data:
+      //   };
+
     case ADD_NEW_ELEMENT:
-      const actualArray = [{
-        firstValue: action.firstValue,
-        secondValue: action.secondValue,
-        thirdValue: action.thirdValue,
-        fourthValue: action.fourthValue,
-        key: uuidv4(),
-      }].concat(state.data);
-      console.log('ACTUAL', actualArray);
+      const addedData = [action.addedObject].concat(state.data);
       return {
         ...state,
-        data: actualArray
+        data: addedData,
       };
 
     case FETCH_REQUEST:

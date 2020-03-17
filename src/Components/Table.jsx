@@ -259,13 +259,6 @@ let swapiTable = ({
   newObject[values.valueThree] = '';
   newObject[values.valueFour] = '';
   newObject.key = uuidv4();
-  // labels.labelName;
-  // labels.labelElementTwo;
-  // labels.labelElementThree;
-  // labels.labelElementFour;
-
-  console.log('NEW OBJECT', newObject);
-  console.log('ROWS', rows);
 
   const EnhancedTableToolbar = (props) => {
     const classes = useToolbarStyles();

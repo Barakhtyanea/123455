@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import Table from '../Components/Table';
 import {
@@ -23,7 +24,6 @@ const value = {
 };
 
 class Planets extends Component {
-
   componentDidMount() {
     this.props.fetchPlanets();
   }
@@ -51,3 +51,14 @@ export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps,
 )(Planets));
+
+Planets.propTypes = {
+  labelName: PropTypes.string,
+  labelElementTwo: PropTypes.string,
+  labelElementThree: PropTypes.string,
+  labelElementFour: PropTypes.string,
+  valueOne: PropTypes.string,
+  valueTwo: PropTypes.string,
+  valueThree: PropTypes.string,
+  valueFour: PropTypes.string,
+};

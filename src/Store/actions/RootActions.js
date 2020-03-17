@@ -19,10 +19,10 @@ export const addNewElement = (newAddedObject) => ({
   addedObject: newAddedObject,
 });
 
-export const editNewElement = (editedNewObject) => ({
-  type: EDIT_NEW_ELEMENT,
-  changedNewObject: editedNewObject,
-});
+// export const editNewElement = (editedNewObject) => ({
+//   type: EDIT_NEW_ELEMENT,
+//   changedNewObject: editedNewObject,
+// });
 
 export const fetchRequest = () => ({
   type: FETCH_REQUEST,

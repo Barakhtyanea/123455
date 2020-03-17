@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import {
   fetchPeople, fetchFailure, fetchRequest, fetchSuccess,
@@ -49,3 +50,14 @@ export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps,
 )(People));
+
+People.propTypes = {
+  labelName: PropTypes.string,
+  labelElementTwo: PropTypes.string,
+  labelElementThree: PropTypes.string,
+  labelElementFour: PropTypes.string,
+  valueOne: PropTypes.string,
+  valueTwo: PropTypes.string,
+  valueThree: PropTypes.string,
+  valueFour: PropTypes.string,
+};
